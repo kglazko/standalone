@@ -1,0 +1,46 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - microblog</title>
+    {% else %}
+    <title>Welcome to microblog</title>
+    {% endif %}
+  </head>
+  <body>
+      {% if release_name %}
+      <h1>Welcome to Release {{ release_name }}</h1>
+      {% endif %}
+  </body>
+  {% block content %}
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }} </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  {% if form %}
+  <form action="" method="post" name="login">
+      {{ form.hidden_tag() }}
+      <p>
+          Please enter the Release Number:<br>
+          {{ form.release_num(size=80) }}<br>
+      </p>
+      <p><input type="submit" value="Enter release number"></p>
+  </form>
+  {% endif %}
+
+    {% if qa_form %}
+  <form action="" method="post" name="qa_signoff">
+      {{ qa_form.hidden_tag() }}
+      <p>
+          Provide Q.A. Sign-Off for Firefox {{ release_name }}:<br>
+          {{ qa_form.qa_signoff(size=80) }}<br>
+      </p>
+      <p><input type="submit" value="Check Off"></p>
+  </form>
+  {% endif %}
+{% endblock %}
+</html>
